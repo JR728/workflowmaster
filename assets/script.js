@@ -31,7 +31,14 @@ $(function () {
   
       timeBlock.append(hourElement, descriptionElement, saveButton);
       $(".container-fluid").append(timeBlock);
-  
+      
+      if (hour < currentHour) {
+        timeBlock.addClass("past");
+      } else if (hour === currentHour) {
+        timeBlock.addClass("present");
+      } else {
+        timeBlock.addClass("future");
+    }
     }
 });
 
