@@ -38,8 +38,21 @@ $(function () {
         timeBlock.addClass("present");
       } else {
         timeBlock.addClass("future");
+      }
+      var savedEvent = localStorage.getItem(timeBlockId);
+      if (savedEvent) {
+        descriptionElement.val(savedEvent);
     }
-    }
+}
+var currentDate = dayjs().format("dddd, MMMM D, YYYY");
+$("#currentDay").text(currentDate);
+
+// Event listener for save button
+$(".saveBtn").on("click", function () {
+    var timeBlockId = $(this).parent().attr("id");
+    var eventText = $(this).siblings(".description").val();
+    localStorage.setItem(timeBlockId, eventText);
+  });
 });
 
   
