@@ -1,37 +1,38 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
+// 9am to 5pm
 $(function () {
     var startHour = 9;
     var endHour = 17; // Update the endHour to 18 for including 6pm
   
     var currentHour = dayjs().hour();
-  
+//coverts the hour  
     for (var hour = startHour; hour <= endHour; hour++) {
       var adjustedHour = (hour % 12) || 12; // Adjust the hour displayed using modulo arithmetic
       var amOrPm = hour >= 12 ? "pm" : "am";  
       var timeBlockId = "hour-" + hour;
-  
+// time block section  
       var timeBlock = $("<div>")
         .attr("id", timeBlockId)
         .addClass("row time-block");
-  
+// which hour is in each block  
       var hourElement = $("<div>")
         .addClass("col-2 col-md-1 hour text-center py-3")
         .text(adjustedHour + amOrPm); // Use adjustedHour and amOrPm for displaying the hour
-
+// the type section of the block
       var descriptionElement = $("<textarea>")
         .addClass("col-8 col-md-10 description")
         .attr("rows", "3");
-  
+// the save button   
       var saveButton = $("<button>")
         .addClass("btn saveBtn col-2 col-md-1")
         .attr("aria-label", "save")
         .append($("<i>").addClass("fas fa-save").attr("aria-hidden", "true"));
-  
+// appending the elements to time block  
       timeBlock.append(hourElement, descriptionElement, saveButton);
       $(".container-fluid").append(timeBlock);
-      
+// making the past present and future known      
       if (hour < currentHour) {
         timeBlock.addClass("past");
       } else if (hour === currentHour) {
@@ -39,11 +40,13 @@ $(function () {
       } else {
         timeBlock.addClass("future");
       }
+// saved to local storage      
       var savedEvent = localStorage.getItem(timeBlockId);
       if (savedEvent) {
         descriptionElement.val(savedEvent);
     }
 }
+//the current date
 var currentDate = dayjs().format("dddd, MMMM D, YYYY");
 $("#currentDay").text(currentDate);
 
